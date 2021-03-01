@@ -1,12 +1,9 @@
 package main.java.polarization;
 
-import net.sf.tweety.arg.dung.semantics.Extension;
-import net.sf.tweety.arg.dung.syntax.Argument;
-import net.sf.tweety.commons.util.SetTools;
+import org.tweetyproject.arg.dung.semantics.Extension;
+import org.tweetyproject.arg.dung.syntax.Argument;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SorensenDiceIndex implements ExtensionBasedPolarizationMetric {
     @Override

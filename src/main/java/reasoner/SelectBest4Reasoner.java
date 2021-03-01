@@ -1,7 +1,7 @@
 package main.java.reasoner;
 
-import net.sf.tweety.arg.dung.semantics.Extension;
-import net.sf.tweety.arg.dung.syntax.WeightedDungTheory;
+import org.tweetyproject.arg.dung.semantics.Extension;
+import org.tweetyproject.arg.dung.syntax.WeightedDungTheory;
 
 import java.util.*;
 
@@ -33,8 +33,6 @@ public class SelectBest4Reasoner extends AbstractSelectBestReasoner {
                     continue;
                 }
                 double score1 = this.compareExtensions(ext1, ext2, theory);
-                System.out.print(ext1 + "->" + ext2 + ": ");
-                System.out.println(score1);
                 if (score1 < minScoreExt) {
                     minScoreExt = score1;
                 }

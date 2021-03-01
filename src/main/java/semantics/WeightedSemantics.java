@@ -1,14 +1,21 @@
 package main.java.semantics;
 
+
+/**
+ * class for semantics in weighted argumentation systems
+ */
 public enum WeightedSemantics {
     SMA ("sum most-attacking", "SMA"),
     BEST1("select best 1", "BEST1"),
     BEST2("select best 2", "BEST2"),
     BEST3("select best 3", "BEST3"),
-    BEST4("select best 4", "BEST4"),
-    diverse ("diverse semantics", "div");
+    BEST4("select best 4", "BEST4");
 
     public static final WeightedSemantics SUM_MOST_ATTACKING = SMA;
+    public static final WeightedSemantics SELECT_BEST_1 = BEST1;
+    public static final WeightedSemantics SELECT_BEST_2 = BEST2;
+    public static final WeightedSemantics SELECT_BEST_3 = BEST3;
+    public static final WeightedSemantics SELECT_BEST_4 = BEST4;
 
     /** The description of the semantics. */
     private String description;

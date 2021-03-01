@@ -1,7 +1,7 @@
 package main.java.reasoner;
 
-import net.sf.tweety.arg.dung.semantics.Extension;
-import net.sf.tweety.arg.dung.syntax.WeightedDungTheory;
+import org.tweetyproject.arg.dung.semantics.Extension;
+import org.tweetyproject.arg.dung.syntax.WeightedDungTheory;
 
 import java.util.*;
 

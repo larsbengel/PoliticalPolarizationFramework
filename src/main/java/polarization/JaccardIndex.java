@@ -1,8 +1,8 @@
 package main.java.polarization;
 
-import net.sf.tweety.arg.dung.semantics.Extension;
-import net.sf.tweety.arg.dung.syntax.Argument;
-import net.sf.tweety.commons.util.SetTools;
+import org.tweetyproject.arg.dung.semantics.Extension;
+import org.tweetyproject.arg.dung.syntax.Argument;
+import org.tweetyproject.commons.util.SetTools;
 
 import java.util.*;
 

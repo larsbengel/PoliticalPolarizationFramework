@@ -1,9 +1,9 @@
 package main.java.examples;
 
-import net.sf.tweety.arg.dung.syntax.Argument;
-import net.sf.tweety.arg.social.reasoner.IssReasoner;
-import net.sf.tweety.arg.social.semantics.SimpleProductSemantics;
-import net.sf.tweety.arg.social.syntax.SocialAbstractArgumentationFramework;
+import org.tweetyproject.arg.dung.syntax.Argument;
+import org.tweetyproject.arg.social.reasoner.IssReasoner;
+import org.tweetyproject.arg.social.semantics.SimpleProductSemantics;
+import org.tweetyproject.arg.social.syntax.SocialAbstractArgumentationFramework;
 
 public class ExamplePaper {
     public static void main(String[] args) {

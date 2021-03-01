@@ -1,9 +1,9 @@
 package main.java.reasoner;
 
 import main.java.semantics.WeightedSemantics;
-import net.sf.tweety.arg.dung.reasoner.AbstractExtensionReasoner;
-import net.sf.tweety.arg.dung.semantics.*;
-import net.sf.tweety.arg.dung.syntax.WeightedDungTheory;
+import org.tweetyproject.arg.dung.reasoner.AbstractExtensionReasoner;
+import org.tweetyproject.arg.dung.semantics.*;
+import org.tweetyproject.arg.dung.syntax.WeightedDungTheory;
 
 import java.util.Collection;
 

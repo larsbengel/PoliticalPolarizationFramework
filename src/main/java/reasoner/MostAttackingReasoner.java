@@ -1,10 +1,10 @@
 package main.java.reasoner;
 
-import net.sf.tweety.arg.dung.reasoner.AbstractExtensionReasoner;
-import net.sf.tweety.arg.dung.semantics.Extension;
-import net.sf.tweety.arg.dung.semantics.Semantics;
-import net.sf.tweety.arg.dung.syntax.Argument;
-import net.sf.tweety.arg.dung.syntax.WeightedDungTheory;
+import org.tweetyproject.arg.dung.reasoner.AbstractExtensionReasoner;
+import org.tweetyproject.arg.dung.semantics.Extension;
+import org.tweetyproject.arg.dung.semantics.Semantics;
+import org.tweetyproject.arg.dung.syntax.Argument;
+import org.tweetyproject.arg.dung.syntax.WeightedDungTheory;
 
 import java.util.*;
 
@@ -30,7 +30,6 @@ public class MostAttackingReasoner extends AbstractWeightedReasoner {
         // get extensions for the given semantics
         AbstractExtensionReasoner reasoner = AbstractExtensionReasoner.getSimpleReasonerForSemantics(semantics);
         Collection<Extension> exts = reasoner.getModels(theory);
-        System.out.println(exts);
         Map<Extension, Double> extsUnsorted = new HashMap<>();
         for (Extension ext: exts) {
             // compute sum of outgoing attacks
