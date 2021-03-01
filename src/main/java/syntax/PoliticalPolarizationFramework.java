@@ -3,12 +3,12 @@ package main.java.syntax;
 import main.java.polarization.ExtensionBasedPolarizationMetric;
 import main.java.reasoner.*;
 import main.java.semantics.WeightedSemantics;
-import net.sf.tweety.arg.dung.reasoner.AbstractExtensionReasoner;
-import net.sf.tweety.arg.dung.semantics.*;
-import net.sf.tweety.arg.dung.syntax.*;
-import net.sf.tweety.arg.social.reasoner.IssReasoner;
-import net.sf.tweety.arg.social.semantics.*;
-import net.sf.tweety.arg.social.syntax.SocialAbstractArgumentationFramework;
+import org.tweetyproject.arg.dung.reasoner.AbstractExtensionReasoner;
+import org.tweetyproject.arg.dung.semantics.*;
+import org.tweetyproject.arg.dung.syntax.*;
+import org.tweetyproject.arg.social.reasoner.IssReasoner;
+import org.tweetyproject.arg.social.semantics.*;
+import org.tweetyproject.arg.social.syntax.SocialAbstractArgumentationFramework;
 
 import java.util.*;
 
@@ -28,7 +28,6 @@ public class PoliticalPolarizationFramework {
     /** metric for computing the political polarization from extensions*/
     ExtensionBasedPolarizationMetric polarizationMetric;
 
-
     /**
      * initialize a political polarization framework with the given parameters
      * @param socialSemantics a product semantics for social abstract argumentation
@@ -42,6 +41,54 @@ public class PoliticalPolarizationFramework {
         this.weightedReasoner = AbstractWeightedReasoner.getSimpleReasonerForSemantics(weightedSemantics);
         this.polarizationMetric = pMetric;
 
+    }
+
+    /**
+     * compute polarization within the given social argumentation framework between 2 potential groups
+     * @param saaf a social argumentation framework
+     * @return the polarization score
+     */
+    public double computePolarization(SocialAbstractArgumentationFramework saaf) {
+        return this.computePolarization(saaf, 2);
+    }
+
+    /**
+     * compute polarization within the given social argumentation framework, following these steps:
+     *
+     * @param saaf a social argumentation framework
+     * @param numGroups the number of political groups we suspect in the framework
+     * @return the polarization score
+     */
+    public double computePolarization(SocialAbstractArgumentationFramework saaf, int numGroups) {
+        // compute social support scores
+        SocialMapping<Double> socialSupport = this.socialReasoner.getModel(saaf);
+
+        // create weighted argumentation framework from given graph and social support scores as weights
+        WeightedDungTheory waf = this.SAAFtoWAF(saaf, socialSupport);
+
+        // get scores for all extensions wrt. the given semantics
+        if (this.weightedReasoner instanceof AbstractSelectBestReasoner) {
+            Map<Extension, Double> scores = ((AbstractSelectBestReasoner) this.weightedReasoner).getScores(waf, AbstractExtensionReasoner.getSimpleReasonerForSemantics(this.semantics).getModels(waf));
+
+            // process extensions
+            Map<Extension, Double> scores_sorted = new LinkedHashMap<>();
+            scores.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .forEachOrdered(x -> scores_sorted.put(x.getKey(), x.getValue()));
+
+            // get n best extensions
+            Collection<Extension> bestExtensions = new HashSet<>();
+            List<Extension> exts_sorted = new LinkedList<>(scores_sorted.keySet());
+            for (int i = 0; i < numGroups; i++) {
+                bestExtensions.add(exts_sorted.get(i));
+            }
+
+            // compute polarization
+            return this.polarizationMetric.getPolarization(bestExtensions);
+        } else {
+            throw new IllegalArgumentException("Reasoner is not supported for this operation");
+        }
     }
 
     /**
@@ -74,9 +121,6 @@ public class PoliticalPolarizationFramework {
         for (SocialAbstractArgumentationFramework saaf: saafs) {
             // compute social support scores
             SocialMapping<Double> socialSupport = this.socialReasoner.getModel(saaf);
-            for (Argument a: saaf) {
-                System.out.println(a + ": " + socialSupport.get(a));
-            }
 
 
             // create weighted argumentation framework from given graph and social support scores as weights
@@ -85,10 +129,7 @@ public class PoliticalPolarizationFramework {
             // get best extension of this WAF wrt. the given semantics
             Collection<Extension> extensions = this.weightedReasoner.getModels(waf, this.semantics);
             bestExtensions.add(extensions.iterator().next());
-            System.out.println(extensions.iterator().next());
         }
-
-        System.out.println(bestExtensions);
 
         // compute polarization based on the best extensions of each framework
         return this.polarizationMetric.getPolarization(bestExtensions);
@@ -111,3 +152,4 @@ public class PoliticalPolarizationFramework {
         return waf;
     }
 }
+
